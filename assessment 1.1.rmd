@@ -1,0 +1,54 @@
+---
+title: "Assessment 1.1"
+author: "Ajay Kumar S4644464"
+date: "19/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# R markdown editing#
+
+
+# **R Markdown is a file format for making dynamic documents with R.** An *R Markdown document is written in markdown* (an easy-to-write plain text format) and contains chunks of embedded R code#
+
+```{r fastfood}
+library(tidyverse)
+library(knitr)
+
+
+fastfood <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-09-04/fastfood_calories.csv") #assigning variable fastfood
+```
+
+```{r 1}
+
+fastfood10 <- fastfood %>% head(10) #displaying first 10 rows of fastfood. 
+
+
+knitr::kable(fastfood10 [, 1:5]) #displaying first 10 rows and 5 variables
+
+fastfood10 %>% filter( calories>1000) #displaying calories more than 1000
+
+dont_eat_this <- fastfood10 %>% filter(total_fat>40 & total_carb>80) #displaying the observations with total fat > 40 and total_card>80 and assigned to variable dont_eat_this
+```
+
+```{r}
+
+Mcdonalds <-  fastfood %>% filter(restaurant == "Mcdonalds") #displaying restaurant mcdonalds
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
