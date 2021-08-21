@@ -28,7 +28,7 @@ fastfood <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytues
 fastfood10 <- fastfood %>% head(10) #displaying first 10 rows of fastfood. 
 
 
-knitr::kable(fastfood10 [, 1:5]) #displaying first 10 rows and 5 variables
+knitr::kable(fastfood [1:10, 1:5]) #displaying first 10 rows and 5 variables
 
 fastfood10 %>% filter( calories>1000) #displaying calories more than 1000
 
