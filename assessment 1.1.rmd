@@ -20,6 +20,7 @@ library(tidyverse)
 library(knitr)
 
 
+
 fastfood <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-09-04/fastfood_calories.csv") #assigning variable fastfood
 ```
 
@@ -37,17 +38,71 @@ dont_eat_this <- fastfood10 %>% filter(total_fat>40 & total_carb>80) #displaying
 
 ```{r}
 
-Mcdonalds <-  fastfood %>% filter(restaurant == "Mcdonalds") #displaying restaurant mcdonalds
+Mcdonalds <-  fastfood %>% filter(restaurant == "Mcdonalds") #displaying restaurant Mcdonalds
 
 ```
 
 
+```{r skimr}
+library(skimr)
+Variables <- skim(fastfood) %>%
+  dplyr::select(skim_variable)  # displaying types of variables using skim
+```
+
+```{r counting}
+fastfood %>%
+  count(restaurant, sort = TRUE) %>%
+  kable()  #counting observations of each restaurant
+```
+
+```{r grouping}
+averagecalories <- fastfood %>%
+  group_by(restaurant) %>%
+  summarise(mean(calories))  #displaying average no of calories per type of restaurant
+
+```
+
+```{r mutating}
+addingcalories <- fastfood %>%
+  group_by(restaurant) %>%
+  mutate(average_calories = mean(calories)) %>%
+  ungroup() # adding new variable average_calories to the existing data set
+```
+
+```{r fat}
+addingcalories %>% 
+  group_by(restaurant) %>% 
+  summarise(max(total_fat)) %>%
+  ungroup()                                           #displaying total fat per each type of restaurant
+
+```
+
+```{r mutating fat}
+final <- addingcalories %>%
+  group_by(restaurant) %>%
+  mutate(max_total_fat = max(total_fat)) %>%  
+  ungroup()   #adding Max_total_fat to existing data set
+```
+
+```{r ggplot}
+
+ggplot(final, aes(restaurant, max_total_fat)) +
+  geom_point() #displaying total fat per restaurant.
+
+```
+
+#ggplot2 is a plotting package that makes it simple to create complex plots from data in a data frame. It provides a more programmatic interface for specifying what variables to plot, how they are displayed, and general visual properties.#
 
 
+```{r plotting}
+
+final %>% filter(restaurant == "Mcdonalds") %>% ggplot(aes(x=sugar,y=protein, colour = restaurant, size = sugar)) +
+  geom_point()
+
+#displaying protien and sugar 
 
 
-
-
+```
 
 
 
