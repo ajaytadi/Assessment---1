@@ -152,7 +152,7 @@ fastfood <- fastfood %>% mutate(trans_fat_percent = trans_fat/total_fat * 100)
 ```{r totalfat}
 totalfat <- fastfood %>%
   group_by(restaurant) %>%
-  summarise(total_fat = mean(total_fat))
+  summarise(total_fat = mean(total_fat)) #show the average (mean)  `total_fat` for each type of restaurant
   
 
 ```
