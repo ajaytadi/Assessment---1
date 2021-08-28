@@ -20,12 +20,9 @@ library(mapproj)
 # **R Markdown is a file format for making dynamic documents with R.** An *R Markdown document is written in markdown* (an easy-to-write plain text format) and contains chunks of embedded R code#
 
 ```{r fastfood}
-library(tidyverse)
-library(knitr)
-
-
 
 fastfood <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-09-04/fastfood_calories.csv") #assigning variable fastfood
+
 ```
 
 ```{r 1}
@@ -38,6 +35,7 @@ knitr::kable(fastfood [1:10, 1:5]) #displaying first 10 rows and 5 variables
 fastfood10 %>% filter( calories>1000) #displaying calories more than 1000
 
 dont_eat_this <- fastfood10 %>% filter(total_fat>40 & total_carb>80) #displaying the observations with total fat > 40 and total_card>80 and assigned to variable dont_eat_this
+
 ```
 
 ```{r}
@@ -109,7 +107,7 @@ final %>% filter(restaurant == "Mcdonalds") %>% ggplot(aes(x=sugar,y=protein, co
 ```
 
 ```{r factor}
-class(final$restaurant)  #identifying variables that can be converted as facotrs
+class(final$restaurant)  #identifying variables that can be converted as factors
 
 final2 <- as_factor(final$restaurant) #converting the variable data type
 
@@ -124,7 +122,6 @@ fastfood <- final %>% mutate(fct_relevel(calories_type)) #adding the variable to
 
 ```{r plotting again}
 
- 
 fastfood %>% ggplot(aes(calories_type,restaurant,)) +
   geom_col() +
    coord_flip() +
@@ -135,10 +132,15 @@ fastfood %>% ggplot(aes(calories_type,restaurant,)) +
 
 
 ```{r adding}
+
 fastfood <- fastfood %>% mutate(trans_fat_percent = trans_fat/total_fat * 100)
 
 #show the percentage of `trans_fat` in `total_fat`
+
 ```
+
+
+
 
 ```{r plots}
  
@@ -150,6 +152,7 @@ fastfood <- fastfood %>% mutate(trans_fat_percent = trans_fat/total_fat * 100)
 ```
 
 ```{r totalfat}
+
 totalfat <- fastfood %>%
   group_by(restaurant) %>%
   summarise(total_fat = mean(total_fat)) #show the average (mean)  `total_fat` for each type of restaurant
@@ -158,6 +161,7 @@ totalfat <- fastfood %>%
 ```
 
 ```{r totalfat plot}
+
  ggplot(totalfat, aes(total_fat, restaurant, fill = restaurant)) +
   geom_col()
 
