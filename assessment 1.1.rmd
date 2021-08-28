@@ -7,6 +7,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(skimr)
+library(mapproj)
 ```
 
 
@@ -44,7 +48,7 @@ Mcdonalds <-  fastfood %>% filter(restaurant == "Mcdonalds") #displaying restaur
 
 
 ```{r skimr}
-library(skimr)
+
 Variables <- skim(fastfood) %>%
   dplyr::select(skim_variable)  # displaying types of variables using skim
 ```
@@ -86,8 +90,8 @@ final <- addingcalories %>%
 
 ```{r ggplot}
 
-ggplot(final, aes(restaurant, max_total_fat)) +
-  geom_point() #displaying total fat per restaurant.
+ggplot(final, aes(restaurant, max_total_fat, fill = restaurant)) +
+  geom_col() #displaying total fat per restaurant.
 
 ```
 
@@ -104,6 +108,65 @@ final %>% filter(restaurant == "Mcdonalds") %>% ggplot(aes(x=sugar,y=protein, co
 
 ```
 
+```{r factor}
+class(final$restaurant)
 
+final2 <- as_factor(final$restaurant)
+final2 <- as_factor(final$calories)
+
+class(final)
+
+
+str(final2)
+
+calories_type <- cut_number(final$calories, n = 3, labels=c("low", "med", "high")) 
+ levels(calories_type)
+
+final2 <- final %>% mutate(calories_type)
+
+```
+
+
+```{r plotting again}
+
+ 
+final2 %>% ggplot(aes(calories_type,restaurant,)) +
+  geom_col() +
+   coord_flip() +
+  facet_wrap(~restaurant) +
+  theme_linedraw()
+
+```
+
+
+```{r adding}
+final2 <- final2 %>% mutate(trans_fat_percent = trans_fat/total_fat * 100)
+
+
+```
+
+```{r plots}
+ 
+  ggplot(final2, aes(trans_fat_percent,restaurant)) + 
+  geom_col() +
+   coord_flip() +
+  facet_wrap(~restaurant) +
+  theme_linedraw()
+
+```
+
+```{r totalfat}
+totalfat <- final2 %>%
+  group_by(restaurant) %>%
+  summarise(total_fat = mean(total_fat))
+  
+
+```
+
+```{r totalfat plot}
+ ggplot(totalfat, aes(total_fat, restaurant, fill = restaurant)) +
+  geom_col()
+
+```
 
 
