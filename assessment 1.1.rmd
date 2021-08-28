@@ -103,7 +103,7 @@ ggplot(final, aes(restaurant, max_total_fat, fill = restaurant)) +
 final %>% filter(restaurant == "Mcdonalds") %>% ggplot(aes(x=sugar,y=protein, colour = restaurant, size = sugar)) +
   geom_point()
 
-#displaying protien and sugar 
+#displaying protein and sugar 
 
 
 ```
@@ -137,7 +137,7 @@ fastfood %>% ggplot(aes(calories_type,restaurant,)) +
 ```{r adding}
 fastfood <- fastfood %>% mutate(trans_fat_percent = trans_fat/total_fat * 100)
 
-
+#show the percentage of `trans_fat` in `total_fat`
 ```
 
 ```{r plots}
